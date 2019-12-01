@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+   $.getJSON("http://localhost:8080/students", function(result){
+      $.each(result, function(key,value) {
+         $("#productsJson").append(value.id+" "+value.name+" ");
+         
+      }); 
+   });
+   
+   $("#btn1").click(function(){
+	   var student = {
+			   id : $("#txt1").val(),
+	   	name:$("#txt2").val()
+	   };
+	   var JsonData = JSON.stringify(student);
+	   $.ajax({
+		   type:"POST",
+		   url:"http://localhost:8080/student",
+		   	headers:{
+		   		"Content-Type" : "application/json"
+		   	},
+		   	data : JsonData,
+		   	success:function(data){
+		   		alert("Success")
+		   	},
+		   	error:function(data){
+		   		alert("Error")
+		   	}
+	   })
+   })
+   
+});
+</script>
+</head>
+<body>
+<p id="productsJson"></p>
+
+<input type="text" id="txt1"><br>
+<input type="text" id="txt2"><br>
+<button id="btn1">Save</button>
+
+ 
+</body>
+</html>
